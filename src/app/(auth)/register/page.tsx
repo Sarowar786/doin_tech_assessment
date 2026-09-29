@@ -1,214 +1,186 @@
 "use client";
+
 import Link from "next/link";
-import { z } from "zod";
-import leftimage from "../../../../public/images/company-logo.png";
 import Image from "next/image";
-import logo from "../../../../public/images/logonav.png";
-import { FieldValues, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { p } from "framer-motion/client";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import { useRegisterMutation } from "@/redux/api/authApi";
-import { useDispatch } from "react-redux";
+import { Button } from "@/components/ui/button";
+import AuthVisualShowcase from "@/components/auth/AuthVisualShowcase";
 
-const registerSchema = z
-  .object({
-    full_name: z.string().nonempty("Name is required"),
-    email: z
-      .string()
-      .trim()
-      .nonempty("Email is required")
-      .email("Invalid email address"),
-    password: z
-      .string()
-      .min(1, "Password is required")
-      .max(10, "Password must be at least 10 characters"),
-    confirm_password: z
-      .string()
-      .min(1, "Password is required")
-      .max(10, "Password must be at least 10 characters"),
-  })
-  .refine((data) => data.password === data.confirm_password, {
-    message: "Passwords don't match",
-    path: ["confirmPassword"],
-  });
+const registerSchema = z.object({
+  full_name: z
+    .string()
+    .trim()
+    .min(1, "Full name is required"),
+  email: z
+    .string()
+    .trim()
+    .min(1, "Email is required")
+    .email("Invalid email address"),
+  password: z
+    .string()
+    .min(6, "Password must be at least 6 characters"),
+});
 
-export default function SignupPage() {
+type RegisterFormValues = z.infer<typeof registerSchema>;
+
+export default function RegisterPage() {
   const router = useRouter();
+
   const {
     register,
     handleSubmit,
-    setError,
-    watch,
     formState: { errors, isSubmitting },
-  } = useForm({
+  } = useForm<RegisterFormValues>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
       full_name: "",
       email: "",
       password: "",
-      confirm_password: "",
     },
   });
 
-  const [registerUser, { isLoading }] = useRegisterMutation();
-
-  const onSubmit = async (data: FieldValues) => {
-    const toastId = toast.loading("Registering...");
-
-    try {
-      const payload = {
-        full_name: data.full_name,
-        email: data.email.trim(),
-        password: data.password,
-        confirm_password: data.confirm_password,
-      };
-      console.log("payload", payload);
-
-      const res = await registerUser(payload).unwrap();
-      console.log("response ", res);
-
-      if (res?.success) {
-        const email = res?.data?.user_data?.email || data.email.trim();
-
-        toast.success(res?.message || "Registered successfully!", {
-          id: toastId,
-        });
-
-        // ✅ OTP verify page
-        router.push(`/otp-verify?email=${encodeURIComponent(email)}`);
-      } else {
-        toast.error(res?.message || "Registration failed!", { id: toastId });
-      }
-    } catch (error: any) {
-      console.log("REGISTER ERROR FULL =>", error);
-
-      const msg =
-        error?.data?.error?.email?.[0] || 
-        error?.response?.data?.error?.email?.[0] ||
-        error?.data?.message ||
-        error?.message ||
-        "Something went wrong . please try again ";
-
-      toast.error(msg, { id: toastId });
-    }
+  const onSubmit = async (data: RegisterFormValues) => {
+    // Pure frontend simulation
+    toast.success("Account created successfully! Please sign in 🎉");
+    router.push("/login");
   };
+
   return (
-    <div className="min-h-screen w-full grid grid-cols-1 lg:grid-cols-2">
-      {/* Left: Image */}
-      <div className="relative hidden lg:block border-r border-r-amber-50">
-        <Image
-          src={leftimage}
-          alt="Campus"
-          fill
-          className="object-content"
-          priority
-        />
-        {/* optional overlay blur / tint */}
-        <div className="absolute inset-0 bg-black/10" />
+    <div className="min-h-screen w-full bg-brand-blue bg-hero-grid relative flex flex-col justify-center px-4 sm:px-8 lg:px-12 py-10 sm:py-16 overflow-x-hidden">
+      {/* Top Left Logo */}
+      <div className="absolute top-6 left-6 sm:top-8 sm:left-10 z-30">
+        <Link href="/" className="inline-block group focus:outline-none" aria-label="ByteSpace Home">
+          <div className="relative h-8 w-32 sm:w-36 transition-transform group-hover:scale-105">
+            <Image
+              src="/Header_Logo.png"
+              alt="ByteSpace"
+              fill
+              priority
+              className="object-contain object-left"
+            />
+          </div>
+        </Link>
       </div>
 
-      {/* Right: Form */}
-      <div className="flex items-center justify-center px-6 py-12 bg-gray-50">
-        <div className="w-full max-w-md">
-          {/* Logo */}
-          <div className="flex flex-col items-center">
-            {/* চাইলে logo image দাও */}
-            <Link href={"/"} className="w-60 flex items-center justify-center">
-              <Image src={logo} alt="logo" />
-            </Link>
-            <h1 className="mt-4 text-2xl font-semibold text-gray-900">
-              Hey! Welcome
-            </h1>
-            <p className="mt-1 text-sm text-gray-500">Register your account</p>
-          </div>
+      {/* Main Two-Column Centered Layout */}
+      <div className="max-w-6xl w-full mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center pt-10 sm:pt-6">
+        {/* Left Column: Visual & Course Showcase */}
+        <div className="w-full flex justify-center lg:justify-start">
+          <AuthVisualShowcase
+            title="Sign up and come in"
+            description="The registration process is straightforward, uncomplicated, and efficient, allowing users to sign up quickly, easily, and at no cost"
+          />
+        </div>
 
-          {/* Form */}
-          <form onSubmit={handleSubmit(onSubmit)} className="mt-8 space-y-4">
+        {/* Right Column: Clean White Rounded Card */}
+        <div className="w-full flex justify-center lg:justify-end">
+          <div className="w-full max-w-[460px] bg-white rounded-[32px] p-8 sm:p-12 shadow-2xl border border-white/20 transition-all">
+            {/* Header */}
             <div>
-              <label className="text-sm text-gray-700">Full Name</label>
-              <input
-                type="text"
-                placeholder="Enter your name"
-                className={`mt-1 w-full rounded-lg border px-4 py-3 text-sm outline-none transition
-                  ${errors.full_name ? "border-red-500" : "border-gray-200 focus:border-orange-500"}
-                `}
-                {...register("full_name")}
-              />
-              {errors.full_name && (
-                <p className="mt-1 text-xs text-red-500">
-                  {" "}
-                  {errors.full_name.message}{" "}
-                </p>
-              )}
+              <p className="text-sm font-semibold text-brand-blue mb-1">
+                Create an Account
+              </p>
+              <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+                Welcome to ByteSpace
+              </h1>
             </div>
-            <div>
-              <label className="text-sm text-gray-700">Email</label>
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className={`mt-1 w-full rounded-lg border px-4 py-3 text-sm outline-none transition
-                  ${errors.email ? "border-red-500" : "border-gray-200 focus:border-orange-500"}
-                `}
-                {...register("email")}
-              />
-              {errors.email && (
-                <p className="mt-1 text-xs text-red-600">
-                  {errors.email.message}
-                </p>
-              )}
-            </div>
-            <div>
-              <label className="text-sm text-gray-700">Password</label>
-              <input
-                type="password"
-                placeholder="Enter your password"
-                className={`mt-1 w-full rounded-lg border px-4 py-3 text-sm outline-none transition
-                  ${errors.password ? "border-red-500" : "border-gray-200 focus:border-orange-500"}
-                `}
-                {...register("password")}
-              />
-              {errors.password && (
-                <p className="mt-1 text-xs text-red-600">
-                  {errors.password.message}
-                </p>
-              )}
-            </div>
-            <div>
-              <label className="text-sm text-gray-700">Confirm Password</label>
-              <input
-                type="password"
-                placeholder="Confirm Password"
-                className={`mt-1 w-full rounded-lg border px-4 py-3 text-sm outline-none transition
-                  ${errors.password ? "border-red-500" : "border-gray-200 focus:border-orange-500"}
-                `}
-                {...register("confirm_password")}
-              />
-              {errors.confirm_password && (
-                <p className="mt-1 text-xs text-red-600">
-                  {errors.confirm_password.message}
-                </p>
-              )}
-            </div>
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="w-full rounded-lg bg-orange-500 hover:bg-orange-600 transition text-white font-semibold py-3 disabled:opacity-60"
-            >
-              {isSubmitting ? "Register..." : "Register"}
-            </button>
-            {/* Footer */}
-            <p className="text-center text-sm text-gray-500 mt-6">
-              Already have an account?{" "}
-              <Link
-                href="/login"
-                className="text-orange-500 font-semibold hover:underline"
-              >
-                Login
-              </Link>
-            </p>
-          </form>
+
+            {/* Form */}
+            <form onSubmit={handleSubmit(onSubmit)} className="mt-8 space-y-5" noValidate>
+              {/* Full Name */}
+              <div>
+                <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+                  Full Name
+                </label>
+                <input
+                  type="text"
+                  placeholder="Jamie Davis"
+                  className={`w-full rounded-xl border px-4 py-3 text-sm text-slate-900 placeholder:text-gray-400 outline-none transition focus:ring-1 focus:ring-brand-blue ${
+                    errors.full_name
+                      ? "border-red-500 focus:border-red-500"
+                      : "border-gray-200 focus:border-brand-blue"
+                  }`}
+                  {...register("full_name")}
+                />
+                {errors.full_name && (
+                  <p className="mt-1 text-xs text-red-500">
+                    {errors.full_name.message}
+                  </p>
+                )}
+              </div>
+
+              {/* Email */}
+              <div>
+                <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+                  Email
+                </label>
+                <input
+                  type="email"
+                  placeholder="designer@example.com"
+                  className={`w-full rounded-xl border px-4 py-3 text-sm text-slate-900 placeholder:text-gray-400 outline-none transition focus:ring-1 focus:ring-brand-blue ${
+                    errors.email
+                      ? "border-red-500 focus:border-red-500"
+                      : "border-gray-200 focus:border-brand-blue"
+                  }`}
+                  {...register("email")}
+                />
+                {errors.email && (
+                  <p className="mt-1 text-xs text-red-500">
+                    {errors.email.message}
+                  </p>
+                )}
+              </div>
+
+              {/* Password */}
+              <div>
+                <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+                  Password
+                </label>
+                <input
+                  type="password"
+                  placeholder="********"
+                  className={`w-full rounded-xl border px-4 py-3 text-sm text-slate-900 placeholder:text-gray-400 outline-none transition focus:ring-1 focus:ring-brand-blue ${
+                    errors.password
+                      ? "border-red-500 focus:border-red-500"
+                      : "border-gray-200 focus:border-brand-blue"
+                  }`}
+                  {...register("password")}
+                />
+                {errors.password && (
+                  <p className="mt-1 text-xs text-red-500">
+                    {errors.password.message}
+                  </p>
+                )}
+              </div>
+
+              {/* Continue Submit Button (aligned right like design) */}
+              <div className="flex justify-end pt-2">
+                <Button
+                  type="submit"
+                  variant="lime"
+                  disabled={isSubmitting}
+                  className="rounded-full px-8 py-3 text-sm font-semibold text-slate-950 shadow-sm transition-transform hover:scale-[1.02] active:scale-[0.98] h-auto"
+                >
+                  {isSubmitting ? "Submitting..." : "Continue"}
+                </Button>
+              </div>
+
+              {/* Bottom Footer Link */}
+              <p className="text-center text-sm text-slate-500 pt-6">
+                Already have an account?{" "}
+                <Link
+                  href="/login"
+                  className="text-brand-blue font-semibold hover:underline"
+                >
+                  Login
+                </Link>
+              </p>
+            </form>
+          </div>
         </div>
       </div>
     </div>

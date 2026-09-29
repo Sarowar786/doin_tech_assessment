@@ -2,280 +2,279 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import { Menu, X, Globe, ChevronDown, Check, User } from "lucide-react";
-
 import Image from "next/image";
+import { usePathname, useRouter } from "next/navigation";
+import { Menu, X, ShoppingBag, User, LogOut, ChevronDown } from "lucide-react";
 import Cookies from "js-cookie";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "@/redux/features/authSlice";
 import { RootState } from "@/redux/store";
+import { Button } from "@/components/ui/button";
 
-const Navbar = () => {
+const navLinks = [
+  { label: "Home", href: "/" },
+  { label: "Courses", href: "/courses" },
+  { label: "Creators", href: "/creators" },
+];
+
+export default function Navbar() {
   const pathname = usePathname();
-
-  const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const [currentLang, setCurrentLang] = useState<"EN" | "CN">("EN");
-  const [isLangMenuOpen, setIsLangMenuOpen] = useState(false);
-  const langMenuRef = useRef<HTMLDivElement>(null);
-  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
-
   const router = useRouter();
   const dispatch = useDispatch();
 
-  // ✅ Get auth token from Redux
-  const token = useSelector((state: RootState) => state.auth.token);
-  const isLoggedIn = !!token;
+  const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
+  const profileMenuRef = useRef<HTMLDivElement>(null);
 
-  /* Scroll background */
+  // Redux auth token
+  const token = useSelector((state: RootState) => state.auth.token);
+  const isLoggedIn = Boolean(token);
+
+  // Scroll detection
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  /* Outside click for language dropdown */
+  // Close profile dropdown on click outside
   useEffect(() => {
-    const handler = (e: MouseEvent) => {
+    const handleClickOutside = (e: MouseEvent) => {
       if (
-        langMenuRef.current &&
-        !langMenuRef.current.contains(e.target as Node)
+        profileMenuRef.current &&
+        !profileMenuRef.current.contains(e.target as Node)
       ) {
-        setIsLangMenuOpen(false);
+        setIsProfileMenuOpen(false);
       }
     };
-    document.addEventListener("mousedown", handler);
-    return () => document.removeEventListener("mousedown", handler);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
-
-  /* Google translate cookie sync */
-  useEffect(() => {
-    const value = "; " + document.cookie;
-    const parts = value.split("; googtrans=");
-    if (parts.length === 2) {
-      const cookieVal = parts.pop()?.split(";").shift();
-      setCurrentLang(cookieVal?.includes("/zh-CN") ? "CN" : "EN");
-    }
-  }, []);
-
-  const handleLanguageChange = (langCode: string) => {
-    const combo = document.querySelector(".goog-te-combo") as HTMLSelectElement;
-    if (combo) {
-      combo.value = langCode;
-      combo.dispatchEvent(new Event("change"));
-    }
-    setCurrentLang(langCode === "zh-CN" ? "CN" : "EN");
-    setIsLangMenuOpen(false);
-    setIsOpen(false);
-  };
-
-  const navLinks = [
-    { label: "Home", href: "/" },
-    { label: "Destinations", href: "/destinations" },
-    // { label: "Cruises", href: "/cruises" },
-    { label: "Blog", href: "/blogs" },
-    { label: "About Us", href: "/about" },
-    { label: "Contact Us", href: "/contact" },
-    // { label: "Signin", href: "/login" },
-  ];
-
-  const languages = [
-    { code: "en", label: "English", short: "EN" },
-    { code: "zh-CN", label: "中文 (Chinese)", short: "CN" },
-  ];
-
-  const isDarkText = scrolled;
-
-  const isActive = (href: string) =>
-    pathname === href || pathname.startsWith(href + "/");
 
   const handleLogout = () => {
     dispatch(logout());
     Cookies.remove("token");
     Cookies.remove("accessToken");
     localStorage.removeItem("accessToken");
+    setIsProfileMenuOpen(false);
     setIsOpen(false);
     router.push("/");
   };
 
+  const isActive = (href: string) => {
+    if (href === "/") return pathname === "/";
+    return pathname.startsWith(href);
+  };
+
   return (
-    <nav
-      className={`fixed w-full z-60 transition-all duration-300 ${
-        scrolled ? "bg-white shadow-md py-3" : "bg-gray-500 py-5"
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? "bg-brand-blue/90 backdrop-blur-md shadow-lg border-b border-white/10 py-3.5"
+          : "bg-transparent py-5"
       }`}
     >
-      <div className="container mx-auto px-4 md:px-8 flex justify-between items-center">
-        {/* Logo */}
-        <Link href="/" className="flex items-center">
-          {/* <img src={logo} alt="Long Vacation Logo" /> */}
-          <p>logo</p>
-        </Link>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between">
+          {/* Logo */}
+          <Link
+            href="/"
+            className="flex items-center gap-2 group focus:outline-none"
+            aria-label="ByteSpace Home"
+          >
+            <div className="relative h-8 w-32 sm:w-36 transition-transform group-hover:scale-105">
+              <Image
+                src="/Header_Logo.png"
+                alt="ByteSpace Logo"
+                fill
+                priority
+                className="object-contain object-left"
+              />
+            </div>
+          </Link>
 
-        {/* Desktop Menu */}
-        <div className="hidden md:flex items-center justify-center gap-8">
-          <ul className="flex space-x-4 lg:space-x-8 pt-1.5">
-            {navLinks.map((link) => (
-              <li key={link.label}>
+          {/* Desktop Navigation Links */}
+          <nav className="hidden md:flex items-center space-x-8 lg:space-x-10">
+            {navLinks.map((link) => {
+              const active = isActive(link.href);
+              return (
                 <Link
+                  key={link.label}
                   href={link.href}
-                  className={`font-medium transition-colors hover:text-brand-coral ${
-                    isActive(link.href)
-                      ? "text-brand-green font-bold"
-                      : isDarkText
-                        ? "text-brand-navy"
-                        : "text-white"
+                  className={`text-sm lg:text-base font-medium transition-colors relative py-1 ${
+                    active
+                      ? "text-white font-semibold"
+                      : "text-white/80 hover:text-white"
+                  }`}
+                >
+                  {link.label}
+                  {active && (
+                    <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-brand-lime rounded-full" />
+                  )}
+                </Link>
+              );
+            })}
+          </nav>
+
+          {/* Desktop Right Actions */}
+          <div className="hidden md:flex items-center space-x-5 lg:space-x-6">
+            {isLoggedIn ? (
+              <div className="relative" ref={profileMenuRef}>
+                <button
+                  onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
+                  className="flex items-center gap-2 text-white/90 hover:text-white bg-white/10 hover:bg-white/20 border border-white/20 px-3.5 py-1.5 rounded-full text-sm font-medium transition-all"
+                >
+                  <User className="size-4 text-brand-lime" />
+                  <span>Account</span>
+                  <ChevronDown className="size-3.5 opacity-70" />
+                </button>
+
+                {isProfileMenuOpen && (
+                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-xl border border-gray-100 py-1.5 text-gray-800 animate-in fade-in zoom-in-95 duration-150">
+                    <Link
+                      href="/dashboard"
+                      onClick={() => setIsProfileMenuOpen(false)}
+                      className="block px-4 py-2 text-sm hover:bg-gray-50 transition-colors"
+                    >
+                      Dashboard
+                    </Link>
+                    <Link
+                      href="/my-courses"
+                      onClick={() => setIsProfileMenuOpen(false)}
+                      className="block px-4 py-2 text-sm hover:bg-gray-50 transition-colors"
+                    >
+                      My Courses
+                    </Link>
+                    <div className="my-1 border-t border-gray-100" />
+                    <button
+                      onClick={handleLogout}
+                      className="w-full flex items-center gap-2 px-4 py-2 text-sm text-red-600 hover:bg-red-50 text-left transition-colors"
+                    >
+                      <LogOut className="size-4" />
+                      Sign Out
+                    </button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <>
+                <Link
+                  href="/login"
+                  className="text-sm lg:text-base font-medium text-white/90 hover:text-white transition-colors"
+                >
+                  Sign In
+                </Link>
+
+                <Button
+                  asChild
+                  variant="glass"
+                  size="sm"
+                  className="rounded-full px-5 py-2 text-sm font-medium text-white border-white/25 hover:bg-white/20 hover:border-white/40 transition-all"
+                >
+                  <Link href="/register">Join Us</Link>
+                </Button>
+              </>
+            )}
+
+            {/* Shopping Bag Button */}
+            <Link
+              href="/cart"
+              className="relative p-2 rounded-lg border border-white/20 text-white/90 hover:text-white hover:bg-white/10 hover:border-white/40 transition-all focus:outline-none"
+              aria-label="Shopping Cart"
+            >
+              <ShoppingBag className="size-4" />
+            </Link>
+          </div>
+
+          {/* Mobile Menu & Bag Button */}
+          <div className="flex md:hidden items-center gap-2">
+            <Link
+              href="/cart"
+              className="p-2 rounded-lg border border-white/20 text-white hover:bg-white/10 transition-colors"
+              aria-label="Shopping Cart"
+            >
+              <ShoppingBag className="size-4" />
+            </Link>
+
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="p-2 rounded-lg text-white hover:bg-white/10 transition-colors focus:outline-none"
+              aria-label="Toggle menu"
+            >
+              {isOpen ? <X className="size-6" /> : <Menu className="size-6" />}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Drawer Menu */}
+      {isOpen && (
+        <div className="md:hidden bg-brand-blue border-b border-white/15 px-4 pt-3 pb-6 shadow-2xl animate-in slide-in-from-top duration-200">
+          <nav className="flex flex-col space-y-3 pt-2">
+            {navLinks.map((link) => {
+              const active = isActive(link.href);
+              return (
+                <Link
+                  key={link.label}
+                  href={link.href}
+                  onClick={() => setIsOpen(false)}
+                  className={`text-base font-medium py-2 px-3 rounded-lg transition-colors ${
+                    active
+                      ? "bg-white/15 text-white font-semibold"
+                      : "text-white/80 hover:bg-white/10 hover:text-white"
                   }`}
                 >
                   {link.label}
                 </Link>
-              </li>
-            ))}
-            <li>
+              );
+            })}
+
+            <div className="border-t border-white/15 pt-4 mt-2 flex flex-col gap-3">
               {isLoggedIn ? (
-                <div
-                  className="relative"
-                  onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
-                  // onMouseEnter={() => setIsProfileMenuOpen(true)}
-                  // onMouseLeave={() => setIsProfileMenuOpen(false)}
-                >
-                  <button
-                    className={`font-medium hover:text-brand-coral rounded-full p-0.5 border border-brand-green -mt-1 ${
-                      isDarkText ? "text-brand-navy" : "text-white"
-                    }`}
+                <>
+                  <Link
+                    href="/dashboard"
+                    onClick={() => setIsOpen(false)}
+                    className="text-base font-medium text-white/90 py-2 px-3 hover:bg-white/10 rounded-lg"
                   >
-                    <User size={25} />
+                    Dashboard
+                  </Link>
+                  <button
+                    onClick={handleLogout}
+                    className="w-full text-left text-base font-medium text-red-300 py-2 px-3 hover:bg-white/10 rounded-lg"
+                  >
+                    Sign Out
                   </button>
-
-                  {isProfileMenuOpen && (
-                    <div className="absolute right-0 mt-1 w-36 bg-white rounded-lg shadow-lg">
-                      <button
-                        onClick={() => router.push("/tour-book-list")}
-                        className="block px-4 py-1 text-gray-700 hover:bg-gray-100 rounded-lg w-full cursor-pointer"
-                      >
-                        Tour Book List
-                      </button>
-                      <button
-                        onClick={handleLogout}
-                        className="block px-4 py-1 text-gray-700 hover:bg-gray-100 rounded-lg w-full cursor-pointer"
-                      >
-                        Logout
-                      </button>
-                    </div>
-                  )}
-                </div>
+                </>
               ) : (
-                <Link
-                  href="/login"
-                  className={`font-medium hover:text-brand-coral ${
-                    isActive("/login")
-                      ? "text-brand-green font-bold"
-                      : isDarkText
-                        ? "text-brand-navy"
-                        : "text-white"
-                  }`}
-                >
-                  Signin
-                </Link>
-              )}
-            </li>
-          </ul>
-
-          {/* Language Dropdown */}
-          <div className="relative" ref={langMenuRef}>
-            <button
-              onClick={() => setIsLangMenuOpen(!isLangMenuOpen)}
-              className={`flex items-center gap-2 font-semibold border rounded-full px-3 py-1.5 ${
-                isDarkText
-                  ? "border-brand-navy text-brand-navy"
-                  : "border-white text-white"
-              }`}
-            >
-              <Globe size={14} />
-              {currentLang}
-              <ChevronDown size={14} />
-            </button>
-
-            {isLangMenuOpen && (
-              <div className="absolute top-full right-0 mt-3 w-40 bg-white rounded-xl shadow-xl py-2">
-                {languages.map((lang) => (
-                  <button
-                    key={lang.code}
-                    onClick={() => handleLanguageChange(lang.code)}
-                    className={`w-full px-4 py-2 flex justify-between text-sm hover:bg-gray-50 ${
-                      currentLang === lang.short
-                        ? "text-brand-teal"
-                        : "text-gray-600"
-                    }`}
+                <div className="grid grid-cols-2 gap-3 pt-2">
+                  <Button
+                    asChild
+                    variant="glass"
+                    className="w-full rounded-full border-white/30 text-white"
                   >
-                    {lang.label}
-                    {currentLang === lang.short && <Check size={14} />}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Mobile */}
-        <div className="md:hidden flex gap-4">
-          <button
-            onClick={() => setIsLangMenuOpen(!isLangMenuOpen)}
-            className={isDarkText ? "text-brand-navy" : "text-white"}
-          >
-            <Globe size={18} />
-          </button>
-
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className={isDarkText ? "text-brand-navy" : "text-white"}
-          >
-            {isOpen ? <X size={28} /> : <Menu size={28} />}
-          </button>
-        </div>
-      </div>
-
-      {/* Mobile Menu */}
-      {isOpen && (
-        <div className="md:hidden absolute top-full left-0 w-full bg-white shadow-xl h-screen p-6">
-          {navLinks.map((link) => (
-            <Link
-              key={link.label}
-              href={link.href}
-              onClick={() => setIsOpen(false)}
-              className={`block py-4 text-xl border-b ${
-                isActive(link.href)
-                  ? "text-brand-teal font-bold"
-                  : "text-brand-navy"
-              }`}
-            >
-              {link.label}
-            </Link>
-          ))}
-
-          {/* Mobile: Logout/Signin Button */}
-          <div className="mt-6 pt-6">
-            {isLoggedIn ? (
-              <button
-                onClick={handleLogout}
-                className="w-full py-3 font-semibold text-brand-navy hover:bg-gray-100 rounded-lg transition"
-              >
-                Logout
-              </button>
-            ) : (
-              <Link
-                href="/login"
-                onClick={() => setIsOpen(false)}
-                className="block w-full py-3 font-semibold text-brand-navy text-center hover:bg-gray-100 rounded-lg transition"
-              >
-                Signin
-              </Link>
-            )}
-          </div>
+                    <Link href="/login" onClick={() => setIsOpen(false)}>
+                      Sign In
+                    </Link>
+                  </Button>
+                  <Button
+                    asChild
+                    variant="lime"
+                    className="w-full rounded-full"
+                  >
+                    <Link href="/register" onClick={() => setIsOpen(false)}>
+                      Join Us
+                    </Link>
+                  </Button>
+                </div>
+              )}
+            </div>
+          </nav>
         </div>
       )}
-    </nav>
+    </header>
   );
-};
-
-export default Navbar;
+}

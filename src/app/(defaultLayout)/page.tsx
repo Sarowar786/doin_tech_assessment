@@ -1,9 +1,10 @@
-import React from 'react'
+
+import HeroSection from "@/components/home/HeroSection";
 
 export default function HomePage() {
   return (
-    <div>
-      <h1>This is the main home page</h1>
-    </div>
-  )
+    <main className="min-h-screen">
+      <HeroSection />
+    </main>
+  );
 }

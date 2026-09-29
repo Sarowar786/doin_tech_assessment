@@ -19,6 +19,11 @@ const buttonVariants = cva(
         ghost:
           "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
         link: "text-primary underline-offset-4 hover:underline",
+        lime: "bg-brand-lime text-brand-lime-foreground font-semibold hover:bg-brand-lime-hover shadow-xs active:scale-[0.98]",
+        "lime-outline":
+          "border-2 border-brand-lime text-brand-lime hover:bg-brand-lime hover:text-brand-lime-foreground font-semibold",
+        glass:
+          "bg-white/10 text-white hover:bg-white/20 border border-white/20 backdrop-blur-sm shadow-xs",
       },
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",
