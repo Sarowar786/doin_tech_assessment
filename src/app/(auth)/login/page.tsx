@@ -1,15 +1,13 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useDispatch } from "react-redux";
-import { setUser } from "@/redux/features/authSlice";
 import toast from "react-hot-toast";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import AuthVisualShowcase from "@/components/auth/AuthVisualShowcase";
 
@@ -39,15 +37,20 @@ export default function LoginPage() {
     },
   });
 
-  const dispatch = useDispatch();
   const router = useRouter();
 
-  const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl") || "/";
+  const [callbackUrl, setCallbackUrl] = useState("/");
+
+  useEffect(() => {
+    const requestedUrl = new URLSearchParams(window.location.search).get(
+      "callbackUrl"
+    );
+    if (requestedUrl) setCallbackUrl(requestedUrl);
+  }, []);
 
   const onSubmit = async (data: LoginFormValues) => {
     // Pure frontend simulation: store mock session and navigate
-    dispatch(setUser({ token: "demo-frontend-token" }));
+    localStorage.setItem("accessToken", "demo-frontend-token");
     toast.success("Welcome back! Logged in successfully 🎉");
     router.push(callbackUrl);
   };

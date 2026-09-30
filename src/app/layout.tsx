@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Nunito_Sans } from "next/font/google";
 import "./globals.css";
 import { Toaster } from 'react-hot-toast';
-import ReduxProvider from "@/redux/ReduxProvider";
 
 const nunitoSans = Nunito_Sans({
   variable: "--font-nunito-sans",
@@ -32,8 +31,7 @@ export default function RootLayout({
       <body
         className={`${nunitoSans.variable} antialiased bg-white text-slate-900`}
       >
-        <ReduxProvider>
-          {/* <Navbar /> */}
+        {/* <Navbar /> */}
         {children}
         <Toaster
           position="bottom-right"
@@ -84,7 +82,6 @@ export default function RootLayout({
             },
           }}
         />
-        </ReduxProvider>
       </body>
     </html>
   );
