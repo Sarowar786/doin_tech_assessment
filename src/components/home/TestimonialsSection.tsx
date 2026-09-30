@@ -45,9 +45,9 @@ export default function TestimonialsSection() {
   return (
     <section className="relative w-full overflow-hidden bg-gradient-to-b from-[#fbfdff] via-[#f7faff] to-[#edf3fe] py-20 sm:py-24 lg:py-28">
       {/* Ambient Glows */}
-      <div className="absolute -top-20 right-10 sm:right-20 w-[500px] h-[500px] bg-[#d2f822]/45 blur-[120px] rounded-full pointer-events-none" />
-      <div className="absolute -bottom-20 -left-10 w-[450px] h-[450px] bg-[#3b82f6]/20 blur-[120px] rounded-full pointer-events-none" />
-      {/* <div className="absolute top-1/2 -left-20 w-[380px] h-[380px] bg-blue-200/25 blur-[110px] rounded-full pointer-events-none" /> */}
+      <div className="absolute top-[2%] left-1/2 -translate-x-1/2 w-[250px] h-[250px] bg-[#d2f822] blur-[100px] rounded-full pointer-events-none" />
+      <div className="absolute top-1/2 -translate-y-1/2 -right-[200px] w-[400px] h-[400px] bg-[#d2f822]/40 blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute -bottom-20 -left-10 w-[400px] h-[400px] bg-[#3b82f6]/20 blur-[90px] rounded-full pointer-events-none" />
 
       <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header: Two Columns */}
