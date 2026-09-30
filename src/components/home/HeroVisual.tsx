@@ -84,7 +84,7 @@ export default function HeroVisual() {
       </div>
 
       {/* Central Visual Stage at the Bottom of Hero Section */}
-      <div className="relative w-full max-w-7xl mx-auto flex items-end justify-center overflow-visible mt-auto z-20 pb-0">
+      <div className="relative w-full max-w-6xl mx-auto flex items-end justify-center overflow-visible mt-auto z-20 pb-0">
         {/* Giant Lime Semicircular Dome Backdrop:
             Positioned with bottom-0 translate-y-1/2 so the equator is right on the bottom line.
             The UPPER HALF of the circle is 100% FULLY VISIBLE as a perfect semicircular dome! */}

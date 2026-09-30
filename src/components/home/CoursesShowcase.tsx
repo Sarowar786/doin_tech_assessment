@@ -141,7 +141,7 @@ export default function CoursesShowcase() {
 
   return (
     <section className="w-full bg-white py-10 sm:py-12 lg:py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto">
           <h2 className="text-[44px] sm:text-4xl md:text-5xl font-semibold text-slate-900 tracking-tight leading-tight">

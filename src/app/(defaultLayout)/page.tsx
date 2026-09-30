@@ -3,6 +3,7 @@ import BrandPartners from "@/components/home/BrandPartners";
 import HeroSection from "@/components/home/HeroSection";
 import CoursesShowcase from "@/components/home/CoursesShowcase";
 import LearningPaths from "@/components/home/LearningPaths";
+import GrowthPathSection from "@/components/home/GrowthPathSection";
 
 export default function HomePage() {
   return (
@@ -11,6 +12,7 @@ export default function HomePage() {
       <BrandPartners />
       <CoursesShowcase />
       <LearningPaths />
+      <GrowthPathSection />
     </main>
   );
 }

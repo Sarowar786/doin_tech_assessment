@@ -56,7 +56,7 @@ const partnerLogos = [
 export default function BrandPartners() {
   return (
     <section className="w-full h-50 bg-[#F5F5F6]/50 pt-2 sm:pt-16 pb-16 sm:pb-24 border-b border-gray-100">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Row of 5 Partner Logos */}
         <div className="flex flex-wrap items-center justify-center md:justify-between gap-8 sm:gap-12 opacity-85 py-6">
           {partnerLogos.map((logo, index) => (
