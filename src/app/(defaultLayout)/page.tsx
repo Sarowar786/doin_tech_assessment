@@ -5,6 +5,7 @@ import CoursesShowcase from "@/components/home/CoursesShowcase";
 import LearningPaths from "@/components/home/LearningPaths";
 import GrowthPathSection from "@/components/home/GrowthPathSection";
 import TestimonialsSection from "@/components/home/TestimonialsSection";
+import CreatorSection from "@/components/home/CreatorSection";
 
 export default function HomePage() {
   return (
@@ -14,6 +15,7 @@ export default function HomePage() {
       <CoursesShowcase />
       <LearningPaths />
       <GrowthPathSection />
+      <CreatorSection />
       <TestimonialsSection />
     </main>
   );
