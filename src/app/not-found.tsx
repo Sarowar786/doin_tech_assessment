@@ -99,13 +99,6 @@ export default function NotFound() {
     return () => cancelAnimationFrame(frame);
   }, []);
 
-  const quickLinks = [
-    { label: "🏠 Home", href: "/" },
-    { label: "✈️ Destinations", href: "/destinations" },
-    { label: "📖 Blog", href: "/blogs" },
-    { label: "📞 Contact", href: "/contact" },
-  ];
-
   return (
     <>
       <style>{`
@@ -245,21 +238,6 @@ export default function NotFound() {
             Looks like our plane flew off-course. The page you're looking for
             has either moved, been removed, or never existed.
           </p>
-
-          {/* Quick links */}
-          <div className="flex flex-wrap justify-center gap-3 mb-10">
-            {quickLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="px-5 py-2.5 rounded-full border border-white/10 bg-white/5 text-white/80 text-sm font-medium
-                           hover:bg-[#2CD4BF]/20 hover:border-[#2CD4BF]/50 hover:text-[#2CD4BF]
-                           transition-all duration-300 backdrop-blur-sm"
-              >
-                {link.label}
-              </Link>
-            ))}
-          </div>
 
           {/* Primary CTA */}
           <Link

@@ -1,9 +1,20 @@
-import React from 'react'
+
+import BrandPartners from "@/components/home/BrandPartners";
+import HeroSection from "@/components/home/HeroSection";
+import CoursesShowcase from "@/components/home/CoursesShowcase";
+import LearningPaths from "@/components/home/LearningPaths";
+import GrowthPathSection from "@/components/home/GrowthPathSection";
+import TestimonialsSection from "@/components/home/TestimonialsSection";
 
 export default function HomePage() {
   return (
-    <div>
-      <h1>This is the main home page</h1>
-    </div>
-  )
+    <main className="min-h-screen">
+      <HeroSection />
+      <BrandPartners />
+      <CoursesShowcase />
+      <LearningPaths />
+      <GrowthPathSection />
+      <TestimonialsSection />
+    </main>
+  );
 }

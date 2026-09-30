@@ -45,7 +45,19 @@
   --radius-2xl: calc(var(--radius) + 8px);
   --radius-3xl: calc(var(--radius) + 12px);
   --radius-4xl: calc(var(--radius) + 16px);
-  --color-brand-green:#A3E635;
+  --color-brand-green: #A3E635;
+  --color-brand-blue: var(--brand-blue);
+  --color-brand-blue-hover: var(--brand-blue-hover);
+  --color-brand-blue-dark: var(--brand-blue-dark);
+  --color-brand-blue-light: var(--brand-blue-light);
+  --color-brand-blue-soft: var(--brand-blue-soft);
+  --color-brand-lime: var(--brand-lime);
+  --color-brand-lime-hover: var(--brand-lime-hover);
+  --color-brand-lime-foreground: var(--brand-lime-foreground);
+  --color-brand-lime-soft: var(--brand-lime-soft);
+  --color-brand-navy: var(--brand-navy);
+  --color-brand-surface: var(--brand-surface);
+  --color-brand-subtle: var(--brand-subtle);
 }
 
 :root {
@@ -81,6 +93,20 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+
+  /* ByteSpace Global Colors */
+  --brand-blue: #1346f0;
+  --brand-blue-hover: #0f3ad1;
+  --brand-blue-dark: #0a2699;
+  --brand-blue-light: #3866f6;
+  --brand-blue-soft: #edf2ff;
+  --brand-lime: #cbf822;
+  --brand-lime-hover: #b8e412;
+  --brand-lime-foreground: #091326;
+  --brand-lime-soft: #f4fee1;
+  --brand-navy: #071536;
+  --brand-surface: #ffffff;
+  --brand-subtle: #c4d4fe;
 }
 
 .dark {
@@ -115,6 +141,20 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+
+  /* ByteSpace Dark Mode */
+  --brand-blue: #1b4ffa;
+  --brand-blue-hover: #3364ff;
+  --brand-blue-dark: #0b2eb5;
+  --brand-blue-light: #4c77f8;
+  --brand-blue-soft: #14244c;
+  --brand-lime: #cbf822;
+  --brand-lime-hover: #b8e412;
+  --brand-lime-foreground: #091326;
+  --brand-lime-soft: #1d2c07;
+  --brand-navy: #050d24;
+  --brand-surface: #0b152d;
+  --brand-subtle: #8daaf5;
 }
 
 @layer base {
@@ -124,4 +164,38 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.bg-hero-grid {
+  background-color: var(--brand-blue);
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-size: 80px 80px;
+}
+
+@keyframes float-slow {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(1deg);
+  }
+}
+
+@keyframes float-reverse {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(8px) rotate(-1deg);
+  }
+}
+
+.animate-float-slow {
+  animation: float-slow 6s ease-in-out infinite;
+}
+
+.animate-float-reverse {
+  animation: float-reverse 7s ease-in-out infinite;
 }
