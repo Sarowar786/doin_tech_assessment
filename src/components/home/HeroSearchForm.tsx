@@ -11,25 +11,28 @@ export default function HeroSearchForm({
 }: HeroSearchFormProps) {
   return (
     <form
-      className={`w-full max-w-xl mx-auto ${className}`}
+      className={`flex items-center justify-center gap-3 sm:gap-4 w-full max-w-xl mx-auto px-4 ${className}`}
       role="search"
     >
-      <div className="relative flex items-center bg-white rounded-full p-1.5 pl-5 sm:pl-6 shadow-2xl transition-all focus-within:ring-4 focus-within:ring-white/30 border border-white/20">
-        <Search className="size-5 text-gray-400 shrink-0 mr-3" />
+      {/* White Input Pill */}
+      <div className="flex-1 max-w-[420px] relative flex items-center bg-white rounded-full h-11 sm:h-[48px] px-4 sm:px-5 shadow-lg transition-all focus-within:ring-2 focus-within:ring-white/40">
+        <Search className="size-4 sm:size-4.5 text-gray-400 shrink-0 mr-2.5 sm:mr-3" />
         <input
           type="text"
           placeholder="Course, topic, creator"
-          className="w-full bg-transparent text-gray-800 placeholder:text-gray-400 text-sm sm:text-base outline-none pr-2 font-normal"
+          className="w-full bg-transparent text-gray-800 placeholder:text-gray-400 text-xs sm:text-sm md:text-[14px] outline-none font-normal"
           aria-label="Search courses, topics, or creators"
         />
-        <Button
-          type="submit"
-          variant="lime"
-          className="rounded-full px-6 sm:px-8 py-2.5 sm:py-3 text-sm sm:text-base font-semibold text-slate-900 h-auto shrink-0 shadow-sm transition-transform hover:scale-[1.02] active:scale-[0.98]"
-        >
-          Search
-        </Button>
       </div>
+
+      {/* Separate Lime Search Button Pill */}
+      <Button
+        type="submit"
+        variant="lime"
+        className="rounded-full px-6 sm:px-8 h-11 sm:h-[48px] text-xs sm:text-sm md:text-[14px] font-semibold text-slate-950 shrink-0 shadow-lg transition-all hover:scale-105 active:scale-95 cursor-pointer"
+      >
+        Search
+      </Button>
     </form>
   );
 }

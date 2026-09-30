@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
-import { Menu, X, ShoppingBag, User, LogOut, ChevronDown } from "lucide-react";
+import { Menu, X, ShoppingBag, User, LogOut, ChevronDown, Handbag } from "lucide-react";
 import Cookies from "js-cookie";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "@/redux/features/authSlice";
@@ -71,13 +71,13 @@ export default function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 h-[120px] flex items-center ${
         scrolled
-          ? "bg-brand-blue/90 backdrop-blur-md shadow-lg border-b border-white/10 py-3.5"
-          : "bg-transparent py-5"
+          ? "bg-brand-blue/90 backdrop-blur-md shadow-lg border-b border-white/10"
+          : "bg-transparent"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link
@@ -104,16 +104,13 @@ export default function Navbar() {
                 <Link
                   key={link.label}
                   href={link.href}
-                  className={`text-sm lg:text-base font-medium transition-colors relative py-1 ${
+                  className={`text-sm lg:text-base font-base transition-colors relative py-1 ${
                     active
                       ? "text-white font-semibold"
                       : "text-white/80 hover:text-white"
                   }`}
                 >
                   {link.label}
-                  {active && (
-                    <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-brand-lime rounded-full" />
-                  )}
                 </Link>
               );
             })}
@@ -163,29 +160,27 @@ export default function Navbar() {
               <>
                 <Link
                   href="/login"
-                  className="text-sm lg:text-base font-medium text-white/90 hover:text-white transition-colors"
+                  className="text-sm lg:text-base font-base text-white hover:text-white transition-colors"
                 >
                   Sign In
                 </Link>
 
-                <Button
-                  asChild
-                  variant="glass"
-                  size="sm"
-                  className="rounded-full px-5 py-2 text-sm font-medium text-white border-white/25 hover:bg-white/20 hover:border-white/40 transition-all"
+                <Link
+                  href="/register"
+                  className="text-sm lg:text-base font-base text-white hover:bg-white/20 transition-all"
                 >
-                  <Link href="/register">Join Us</Link>
-                </Button>
+                  Join Us
+                </Link>
               </>
             )}
 
             {/* Shopping Bag Button */}
             <Link
               href="/cart"
-              className="relative p-2 rounded-lg border border-white/20 text-white/90 hover:text-white hover:bg-white/10 hover:border-white/40 transition-all focus:outline-none"
+              className="text-white/90 hover:text-white hover:bg-white/10 transition-all focus:outline-none"
               aria-label="Shopping Cart"
             >
-              <ShoppingBag className="size-4" />
+              <Handbag className="size-4" />
             </Link>
           </div>
 

@@ -1,10 +1,5 @@
 import Image from "next/image";
 import { Star, BarChart2 } from "lucide-react";
-import {
-  LimeTorus3D,
-  LimePyramid3D,
-  WhiteSquiggle3D,
-} from "@/components/home/Geometric3DShapes";
 
 interface AuthVisualShowcaseProps {
   title: string;
@@ -38,19 +33,37 @@ export default function AuthVisualShowcase({
       {/* Visual Cards & 3D Shapes Showcase */}
       <div className="relative w-full max-w-[420px] sm:max-w-[460px] pb-10 sm:pb-14 pt-4 select-none">
         {/* 3D Shapes */}
-        {/* Top-Left Lime Torus */}
+        {/* Top-Left Torus */}
         <div className="absolute -top-6 -left-6 sm:-left-8 z-30 w-16 sm:w-20 animate-float-slow pointer-events-none">
-          <LimeTorus3D className="w-full h-auto drop-shadow-xl" />
+          <Image
+            src="/Cone (1).png"
+            alt="3D Torus"
+            width={346}
+            height={343}
+            className="w-full h-auto drop-shadow-xl"
+          />
         </div>
 
-        {/* Bottom-Left Lime Pyramid */}
-        <div className="absolute -bottom-6 -left-6 sm:-left-8 z-30 w-20 sm:w-24 animate-float-reverse pointer-events-none">
-          <LimePyramid3D className="w-full h-auto drop-shadow-xl" />
+        {/* Bottom-Left Pyramid */}
+        <div className="absolute -bottom-6 -left-6 sm:-left-8 z-30 w-16 sm:w-20 animate-float-reverse pointer-events-none">
+          <Image
+            src="/Cone (2).png"
+            alt="3D Pyramid"
+            width={190}
+            height={189}
+            className="w-full h-auto drop-shadow-xl"
+          />
         </div>
 
         {/* Right White Squiggle */}
-        <div className="absolute top-[40%] -right-4 sm:-right-8 z-30 w-16 sm:w-20 animate-float-slow pointer-events-none">
-          <WhiteSquiggle3D className="w-full h-auto drop-shadow-xl" />
+        <div className="absolute top-[40%] -right-4 sm:-right-8 z-30 w-14 sm:w-16 animate-float-slow pointer-events-none">
+          <Image
+            src="/Mask Group (1).png"
+            alt="3D Squiggle"
+            width={176}
+            height={176}
+            className="w-full h-auto drop-shadow-xl"
+          />
         </div>
 
         {/* Back Course Card: Build Digital... */}
