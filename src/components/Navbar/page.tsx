@@ -6,9 +6,6 @@ import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { Menu, X, ShoppingBag, User, LogOut, ChevronDown, Handbag } from "lucide-react";
 import Cookies from "js-cookie";
-import { useDispatch, useSelector } from "react-redux";
-import { logout } from "@/redux/features/authSlice";
-import { RootState } from "@/redux/store";
 import { Button } from "@/components/ui/button";
 
 const navLinks = [
@@ -20,16 +17,17 @@ const navLinks = [
 export default function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
-  const dispatch = useDispatch();
 
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const profileMenuRef = useRef<HTMLDivElement>(null);
 
-  // Redux auth token
-  const token = useSelector((state: RootState) => state.auth.token);
-  const isLoggedIn = Boolean(token);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    setIsLoggedIn(Boolean(localStorage.getItem("accessToken")));
+  }, []);
 
   // Scroll detection
   useEffect(() => {
@@ -55,7 +53,6 @@ export default function Navbar() {
   }, []);
 
   const handleLogout = () => {
-    dispatch(logout());
     Cookies.remove("token");
     Cookies.remove("accessToken");
     localStorage.removeItem("accessToken");

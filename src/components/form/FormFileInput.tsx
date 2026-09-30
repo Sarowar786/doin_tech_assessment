@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { UploadCloud, X } from "lucide-react";
 import { toast } from "sonner";
@@ -11,7 +12,6 @@ import {
   FieldDescription,
   FieldError,
 } from "@/components/ui/field";
-import { useUploadFileMutation } from "@/redux/api/uploaderApi";
 
 
 type Props = {
@@ -34,7 +34,7 @@ export default function FormFileInput({
   type = "image", // default image
 }: Props) {
   const { control } = useFormContext();
-  const [uploadFile, { isLoading }] = useUploadFileMutation();
+  const [isLoading, setIsLoading] = useState(false);
 
   const isVideo = type === "video";
 
@@ -45,6 +45,7 @@ export default function FormFileInput({
     onChange: any,
     current: string[] = []
   ) => {
+    setIsLoading(true);
     try {
       const incomingFiles = Array.from(files);
 
@@ -66,13 +67,8 @@ export default function FormFileInput({
         return;
       }
 
-      const formData = new FormData();
-      incomingFiles.forEach((file) => {
-        formData.append("files", file);
-      });
-
-      const res = await uploadFile(formData).unwrap();
-      const urls = res?.data?.file_urls || [];
+      // Keep previews local because this frontend has no upload backend.
+      const urls = incomingFiles.map((file) => URL.createObjectURL(file));
 
       const updated = multiple ? [...current, ...urls] : urls;
 
@@ -81,6 +77,8 @@ export default function FormFileInput({
       toast.success("Uploaded successfully 🚀");
     } catch (err) {
       toast.error("Upload failed ❌");
+    } finally {
+      setIsLoading(false);
     }
   };
 
