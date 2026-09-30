@@ -13,7 +13,7 @@ export default function HeroVisual() {
   return (
     <>
       {/* 3D Decorative Floating Shapes - Spanning the ENTIRE Hero Section */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden z-10">
+      <div className="absolute inset-0 pointer-events-none overflow-hidden z-30">
         {/* 1. Lime Spring (Top-Left, beside H1 Title) */}
         <div className="absolute top-[120px] sm:top-[140px] lg:top-[160px] left-[0%] sm:left-[0%] lg:left-[%] animate-float-slow select-none">
           <Image
@@ -33,7 +33,7 @@ export default function HeroVisual() {
             alt="White 3D Zigzag"
             width={276}
             height={176}
-            className="w-12 sm:w-28 md:w-36 lg:w-[255px] h-auto object-contain drop-shadow-2xl"
+            className="w-12 sm:w-28 md:w-36 lg:w-[195px] h-auto object-contain drop-shadow-2xl"
           />
         </div>
 
@@ -44,7 +44,7 @@ export default function HeroVisual() {
             alt="White 3D Torus"
             width={346}
             height={343}
-            className="w-28 sm:w-40 md:w-52 lg:w-[240px] h-auto object-contain drop-shadow-2xl"
+            className="w-28 sm:w-40 md:w-52 lg:w-[270px] h-auto object-contain drop-shadow-2xl"
           />
         </div>
 
@@ -67,18 +67,18 @@ export default function HeroVisual() {
             alt="White 3D Pyramid"
             width={190}
             height={189}
-            className="w-14 sm:w-20 md:w-24 lg:w-[230px] h-auto object-contain drop-shadow-2xl"
+            className="w-14 sm:w-20 md:w-24 lg:w-[190px] h-auto object-contain drop-shadow-2xl"
           />
         </div>
 
         {/* 6. White Coil (Bottom-Right Corner) */}
-        <div className="absolute bottom-[20px] sm:bottom-[30px] lg:bottom-[40px] right-[1%] sm:right-[2%] lg:right-[17%] animate-float-reverse select-none">
+        <div className="absolute bottom-[20px] sm:bottom-[30px] lg:bottom-[40px] right-[1%] sm:right-[2%] lg:right-[16%] animate-float-reverse select-none">
           <Image
             src="/Frame (1).png"
             alt="White 3D Coil"
             width={317}
             height={332}
-            className="w-24 sm:w-36 md:w-44 lg:w-[250px] h-auto object-contain drop-shadow-2xl"
+            className="w-24 sm:w-36 md:w-15 lg:w-[260px] hidden md:block h-auto object-contain drop-shadow-2xl"
           />
         </div>
       </div>

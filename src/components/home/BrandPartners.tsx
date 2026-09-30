@@ -55,31 +55,21 @@ const partnerLogos = [
 
 export default function BrandPartners() {
   return (
-    <section className="w-full bg-white pt-12 sm:pt-16 pb-16 sm:pb-24 border-b border-gray-100">
+    <section className="w-full h-50 bg-[#F5F5F6]/50 pt-2 sm:pt-16 pb-16 sm:pb-24 border-b border-gray-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Row of 5 Partner Logos */}
         <div className="flex flex-wrap items-center justify-center md:justify-between gap-8 sm:gap-12 opacity-85 py-6">
           {partnerLogos.map((logo, index) => (
             <div
               key={index}
-              className="flex items-center gap-2.5 text-slate-800 transition-opacity hover:opacity-100"
+              className="flex items-center gap-2.5 text-[#82868E] transition-opacity hover:opacity-100"
             >
               {logo.icon}
-              <span className="font-extrabold text-lg sm:text-xl tracking-tight text-slate-800">
+              <span className="font-extrabold text-lg sm:text-xl tracking-tight text-[#82868E]">
                 logoipsum
               </span>
             </div>
           ))}
-        </div>
-
-        {/* Section Header: Discover Your Passion, Build Your Skills */}
-        <div className="mt-20 sm:mt-24 text-center">
-          <SectionHeader
-            title="Discover Your Passion, Build Your Skills"
-            titleClassName="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight"
-            description="Explore our top-rated courses taught by industry experts and start advancing your career today."
-            align="center"
-          />
         </div>
       </div>
     </section>

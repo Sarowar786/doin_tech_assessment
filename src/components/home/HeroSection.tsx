@@ -1,7 +1,6 @@
 
 import HeroSearchForm from "./HeroSearchForm";
 import HeroVisual from "./HeroVisual";
-import BrandPartners from "./BrandPartners";
 
 export default function HeroSection() {
   return (
@@ -26,12 +25,9 @@ export default function HeroSection() {
           </div>
         </div>
 
-        {/* Hero Visual: Full-section 3D floating shapes + Central stage with upper-half lime dome */}
+        {/* Hero Visual */}
         <HeroVisual />
       </section>
-
-      {/* Brand Partners & Next Section Title */}
-      <BrandPartners />
     </>
   );
 }
