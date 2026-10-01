@@ -5,11 +5,11 @@ import Link from "next/link";
 
 export default function CreatorSection() {
   return (
-    <section className="relative w-full overflow-hidden bg-[#1234FF] py-16 sm:py-20 lg:py-24">
+    <section className="relative w-full overflow-hidden bg-[#1234FF] py-14 sm:py-20 lg:py-24">
       {/* ── Decorative shapes ── */}
 
       {/* Top-left: white spiral swirl */}
-      <div className="pointer-events-none absolute -top-4 w-[90px] sm:w-[110px] lg:w-[330px] select-none">
+      <div className="pointer-events-none absolute -top-4 left-0 w-[70px] sm:w-[110px] md:w-[180px] lg:w-[280px] select-none">
         <Image
           src="/Mask Group.png"
           alt=""
@@ -20,8 +20,8 @@ export default function CreatorSection() {
         />
       </div>
 
-      {/* Top-left-inner*/}
-      <div className="pointer-events-none absolute top-6 left-28 sm:left-36 lg:left-44 w-[70px] sm:w-[85px] lg:w-[200px] select-none">
+      {/* Top-left-inner — visible from sm+ */}
+      <div className="pointer-events-none absolute top-4 sm:top-6 left-[60px] sm:left-[90px] md:left-[140px] lg:left-[230px] w-[50px] sm:w-[75px] md:w-[120px] lg:w-[180px] select-none hidden sm:block">
         <Image
           src="/Mask Group (1).png"
           alt=""
@@ -31,8 +31,8 @@ export default function CreatorSection() {
         />
       </div>
 
-      {/* Left-bottom: yellow-green squiggle / wavy */}
-      <div className="pointer-events-none absolute -bottom-2 -left-4 sm:left-30 w-[100px] sm:w-[120px] lg:w-[300px] select-none">
+      {/* Left-bottom: yellow-green squiggle — hidden on mobile, visible from md */}
+      <div className="pointer-events-none absolute -bottom-2 -left-2 sm:left-0 w-[70px] sm:w-[100px] md:w-[180px] lg:w-[260px] select-none">
         <Image
           src="/Cone (4).png"
           alt=""
@@ -43,7 +43,7 @@ export default function CreatorSection() {
       </div>
 
       {/* Right-top: green triangle cone */}
-      <div className="pointer-events-none absolute top-4 right-4 sm:right-8 lg:right-35 w-[70px] sm:w-[85px] lg:w-[190px] select-none">
+      <div className="pointer-events-none absolute top-2 sm:top-4 right-2 sm:right-6 md:right-10 lg:right-[120px] w-[50px] sm:w-[75px] md:w-[120px] lg:w-[170px] select-none">
         <Image
           src="/Cone (5).png"
           alt=""
@@ -54,7 +54,7 @@ export default function CreatorSection() {
       </div>
 
       {/* Right-mid: white cone / trapezoid */}
-      <div className="pointer-events-none absolute top-10 right-0 sm:right-0 w-[80px] sm:w-[95px] lg:w-[190px] select-none">
+      <div className="pointer-events-none absolute top-6 sm:top-10 right-0 w-[55px] sm:w-[80px] md:w-[120px] lg:w-[170px] select-none">
         <Image
           src="/Cone (3).png"
           alt=""
@@ -65,7 +65,7 @@ export default function CreatorSection() {
       </div>
 
       {/* Right-bottom: yellow-green zigzag */}
-      <div className="pointer-events-none absolute -bottom-2 right-4 sm:right-4 lg:right-6 w-[85px] sm:w-[105px] lg:w-[300px] select-none">
+      <div className="pointer-events-none absolute -bottom-2 right-0 sm:right-2 md:right-4 w-[60px] sm:w-[90px] md:w-[160px] lg:w-[260px] select-none">
         <Image
           src="/Cone(8).png"
           alt=""
@@ -75,8 +75,8 @@ export default function CreatorSection() {
         />
       </div>
 
-      {/* Extra: white mini cone scattered left-mid area */}
-      <div className="pointer-events-none absolute top-2/3 -translate-y-1/2 left-0 sm:left-16 lg:left-0 w-[150px] sm:w-[160px] lg:w-[150px] select-none hidden sm:block">
+      {/* Extra: white mini cone — left-mid, visible from md */}
+      <div className="pointer-events-none absolute top-1/2 -translate-y-1/2 left-0 w-[90px] md:w-[130px] lg:w-[150px] select-none hidden md:block">
         <Image
           src="/Cone(6).png"
           alt=""
@@ -87,13 +87,13 @@ export default function CreatorSection() {
       </div>
 
       {/* ── Main content ── */}
-      <div className="relative z-10 mx-auto max-w-4xl px-6 text-center">
-        <h2 className="text-3xl sm:text-4xl lg:text-[46px] font-bold leading-tight tracking-tight text-white">
+      <div className="relative z-10 mx-auto max-w-xl sm:max-w-2xl md:max-w-3xl lg:max-w-4xl px-6 sm:px-10 text-center">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[46px] font-bold leading-tight tracking-tight text-white">
           Unlock Your Potential as a{" "}
           <span className="whitespace-nowrap">Creator with ByteSpace</span>
         </h2>
 
-        <p className="mt-5 text-sm sm:text-[15px] text-white/80">
+        <p className="mt-4 sm:mt-5 text-xs sm:text-sm md:text-[15px] text-white/80 max-w-[260px] sm:max-w-xl md:max-w-2xl mx-auto">
           Experience the collaboration of numerous creators and an expanding
           selection of courses. Register now and become a part of a community
           comprising over 10,000 local and international creators. Utilize our
@@ -103,7 +103,7 @@ export default function CreatorSection() {
 
         <Link
           href="/become-creator"
-          className="mt-8 inline-block rounded-full border-2 border-[#d2f822] bg-[#d2f822] px-8 py-2 text-sm font-semibold text-[#1234FF] transition-all duration-300 shadow-[0_0_24px_rgba(210,248,34,0.45)] active:scale-95"
+          className="mt-7 sm:mt-8 inline-block rounded-full border-2 border-[#d2f822] bg-[#d2f822] px-6 sm:px-8 py-2 text-xs sm:text-sm font-semibold text-[#1234FF] transition-all duration-300 shadow-[0_0_24px_rgba(210,248,34,0.45)] hover:scale-105 active:scale-95"
         >
           Join as Creator
         </Link>
