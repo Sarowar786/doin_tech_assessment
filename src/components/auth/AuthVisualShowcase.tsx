@@ -34,9 +34,9 @@ export default function AuthVisualShowcase({
       <div className="relative w-full max-w-[420px] sm:max-w-[460px] pb-10 sm:pb-14 pt-4 select-none">
         {/* 3D Shapes */}
         {/* Top-Left Torus */}
-        <div className="absolute -top-6 -left-6 sm:-left-8 z-30 w-16 sm:w-20 animate-float-slow pointer-events-none">
+        <div className="absolute -top-6 -left-6 sm:-left-8 z-30 w-20 sm:w-35 animate-float-slow pointer-events-none">
           <Image
-            src="/Cone (1).png"
+            src="/login_cone1.png"
             alt="3D Torus"
             width={346}
             height={343}
@@ -45,9 +45,9 @@ export default function AuthVisualShowcase({
         </div>
 
         {/* Bottom-Left Pyramid */}
-        <div className="absolute -bottom-6 -left-6 sm:-left-8 z-30 w-16 sm:w-20 animate-float-reverse pointer-events-none">
+        <div className="absolute -bottom-6 -left-6 sm:-left-8 z-30 w-16 sm:w-40 animate-float-reverse pointer-events-none">
           <Image
-            src="/Cone (2).png"
+            src="/Cone (5).png"
             alt="3D Pyramid"
             width={190}
             height={189}
@@ -56,7 +56,7 @@ export default function AuthVisualShowcase({
         </div>
 
         {/* Right White Squiggle */}
-        <div className="absolute top-[40%] -right-4 sm:-right-8 z-30 w-14 sm:w-16 animate-float-slow pointer-events-none">
+        <div className="absolute top-[50%] -right-4 sm:-right-8 z-30 w-14 sm:w-46 animate-float-slow pointer-events-none">
           <Image
             src="/Mask Group (1).png"
             alt="3D Squiggle"
